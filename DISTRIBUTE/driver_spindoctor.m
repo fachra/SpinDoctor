@@ -1,7 +1,7 @@
 close all; clear all; path(pathdef); clc; 
 format short
 addpath SRC
-addpath SRC/PDE SRC/DMRI SRC/FEM SRC/FEM/VectorizedAssembly SRC/GEOMETRY SRC/TETGEN SRC/UTILITIES
+addpath SRC/PDE SRC/DMRI SRC/FEM SRC/GEOMETRY SRC/TETGEN SRC/UTILITIES
 fname_cells_parameters = 'cells_parameters.in';
 fname_simulation_domain = 'simulation_domain_parameters.in';
 fname_simulation_experiment = 'simulation_experiment_parameters.in';

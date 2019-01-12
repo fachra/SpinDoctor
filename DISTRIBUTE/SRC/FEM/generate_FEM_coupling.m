@@ -1,6 +1,8 @@
 function [FEMcouple_MAT,ind0,indf] ...
     = generate_FEM_coupling_JRL(FEM_MAT,Ncmpt,Nboundary,...
     Pts_cmpt_reorder,Ele_cmpt_reorder,Pts_ind,Pts_boundary_reorder,Fac_boundary_reorder)
+
+% Copyright (c) 2019, Jing-Rebecca Li
   
   for iboundary = 1:Nboundary
     for icmpt = 1:Ncmpt

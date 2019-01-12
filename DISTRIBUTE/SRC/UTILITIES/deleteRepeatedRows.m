@@ -1,4 +1,6 @@
 function [matrix,I]=deleteRepeatedRows(matrix)
+% Copyright (c) 2019 Jan Valdman
+
 %function: [element2edges, edge2nodes]=edge_numbering(elements)
 %requires: deleterepeatedrows
 %generates edges of (triangular) triangulation defined in elements
