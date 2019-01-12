@@ -112,10 +112,16 @@ for icmpt = 1:mymesh.Ncmpt
                 
                 disp(['*****',num2str(norm(coordNORMALSnew - FacN'))]);
                 
-                if 
+                if norm(coordNORMALSnew - FacN')>1e-10
+                    disp('check normal');
+                    stop
+                end;
                 
-                mycoeff = (coordNORMALSnew(:,1)*UG(1) + coordNORMALSnew(:,2)*UG(2)+coordNORMALSnew(:,3)*UG(3));
-                GG = flux_matrixP1_3D(neumann,coordinates', DIFF_cmpts(icmpt)*mycoeff);     
+%                 coordNORMALSnew = FacN';
+                size(FacN)
+                size(coordNORMALSnew)
+                mycoeff = (FacN(1,:)*UG(1) + FacN(2,:)*UG(2)+FacN(3,:)*UG(3));
+                GG = flux_matrixP1_3D(neumann,coordinates', DIFF_cmpts(icmpt)*mycoeff');     
                 FEM_G = FEM_G + GG*one;
             end;
         end;

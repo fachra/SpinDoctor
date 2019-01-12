@@ -60,65 +60,9 @@ for icmpt = 1:mymesh.Ncmpt
             neumann = mymesh.Fac_boundary_reorder{icmpt}{iboundary}';
             
             if sum(size(neumann))>0
-                if (1==1)
-                    [FacA,FacC,FacN] = get_surfacenormal_mesh(mymesh.Pts_cmpt_reorder{icmpt},mymesh.Ele_cmpt_reorder{icmpt},neumann');
-%                      coordNORMALSnew = FacN';
-%                  else
-                    coordVERTICES=zeros(size(neumann,1),3,3);
-                    coordVERTICES(1:size(neumann,1),1:3,1)=coordinates_t(neumann(:,1),:);
-                    coordVERTICES(1:size(neumann,1),1:3,2)=coordinates_t(neumann(:,2),:);
-                    coordVERTICES(1:size(neumann,1),1:3,3)=coordinates_t(neumann(:,3),:);
-                    [coordNORMALSnew,coordVERTICESnew] = COMPUTE_mesh_normals(coordVERTICES);
-
-                    ALL_VERTICES=zeros(size(elements,2),3,4);
-
-                    ALL_VERTICES(1:size(elements,2),1:3,1)=coordinates_t(elements(1,:),:);
-                    ALL_VERTICES(1:size(elements,2),1:3,2)=coordinates_t(elements(2,:),:);
-                    ALL_VERTICES(1:size(elements,2),1:3,3)=coordinates_t(elements(3,:),:);        
-                    ALL_VERTICES(1:size(elements,2),1:3,4)=coordinates_t(elements(4,:),:);        
-
-                    midpoint_facet_coords = mean(coordVERTICES(:,:,:),3);
-                    midpoint_ele_coords = mean(ALL_VERTICES(:,:,:),3);
-                    for ifacet=1:size(midpoint_facet_coords,1)
-                      % find the ending point of the normal of each facet
-                      endpoint_of_normal = midpoint_facet_coords(ifacet,:) + coordNORMALSnew(ifacet,:);
-                      % compare the position of the ending point of the normal to the
-                      % facet
-                      endpoint_eval =   coordNORMALSnew(ifacet,1)*(endpoint_of_normal(1)-midpoint_facet_coords(ifacet,1))+...
-                                        coordNORMALSnew(ifacet,2)*(endpoint_of_normal(2)-midpoint_facet_coords(ifacet,2))+...
-                                        coordNORMALSnew(ifacet,3)*(endpoint_of_normal(3)-midpoint_facet_coords(ifacet,3));
-
-                      % find the closest element to the ending point of the normal  
-                      d=sum((midpoint_ele_coords-ones(size(midpoint_ele_coords,1),1)*midpoint_facet_coords(ifacet,:)).^2,2);
-                      [mval,mid]=min(d);
-                      closestpoint_to_normal = midpoint_ele_coords(mid,:);
-
-                      % compare the position of the closest point to the facet
-                      closestpoint_eval = coordNORMALSnew(ifacet,1)*(closestpoint_to_normal(1)-midpoint_facet_coords(ifacet,1))+...
-                                          coordNORMALSnew(ifacet,2)*(closestpoint_to_normal(2)-midpoint_facet_coords(ifacet,2))+...
-                                          coordNORMALSnew(ifacet,3)*(closestpoint_to_normal(3)-midpoint_facet_coords(ifacet,3));
-                      normal_orientation=(endpoint_eval*closestpoint_eval);
-                      coordNORMALSnew(ifacet,:) =sign(-normal_orientation)*coordNORMALSnew(ifacet,:);
-                    end;
-                    if (1==0)
-                        figure;
-                        PLOT_3D_stl_patch(coordVERTICESnew,-coordNORMALSnew);
-
-                        MD = mean(coordVERTICESnew,3);
-                        sqrt(sum((MD+0.1*coordNORMALSnew).^2,2))-sqrt(sum((MD+0.0*coordNORMALSnew).^2,2))
-                        view(3)
-                    end;
-                end;
-                
-                disp(['*****',num2str(norm(coordNORMALSnew - FacN'))]);
-                
-                if norm(coordNORMALSnew - FacN')>1e-10
-                    disp('check normal');
-                    stop
-                end;
-                
-                mycoeff = (coordNORMALSnew(:,1)*UG(1) + coordNORMALSnew(:,2)*UG(2)+coordNORMALSnew(:,3)*UG(3));
-                GG = flux_matrixP1_3D(neumann,coordinates', DIFF_cmpts(icmpt)*mycoeff);     
+                [FacA,FacC,FacN] = get_surfacenormal_mesh(mymesh.Pts_cmpt_reorder{icmpt},mymesh.Ele_cmpt_reorder{icmpt},neumann');
+                mycoeff = (FacN(1,:)*UG(1) + FacN(2,:)*UG(2)+FacN(3,:)*UG(3));
+                GG = flux_matrixP1_3D(neumann,coordinates', DIFF_cmpts(icmpt)*mycoeff');     
                 FEM_G = FEM_G + GG*one;
             end;
         end;
