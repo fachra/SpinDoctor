@@ -29,8 +29,6 @@ fname_tetgen = [fname_cells];
 
 if (~isempty(mymesh))
 
-
-	
 	PLOT_FEMESH(mymesh,Cell_cmpt,Box_cmpt,Nucleus_cmpt);
 
 	[experiment_common,experiment_hadc,experiment_btpde] ...
@@ -62,10 +60,8 @@ if (~isempty(mymesh))
 		%PLOT_TIMING(HADC_elapsed_time);
 	end
 
-
 	[ADC_STA,ADC_STA_allcmpts] = STA(experiment_common,DIFF_cmpts,VOL,SAu,IC_cmpts);	
 	PLOT_ADC(ADC_STA,ADC_STA_allcmpts,DIFF_cmpts,'STA');
-
 
 end
 
