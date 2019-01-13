@@ -5,12 +5,10 @@ function qmesh=mesh_quality( node_xyz, tetra_node)
 % % times the radius of the insphere hin divided by the radius of the circumsphere hout.
 % % Algorithm to compute hin and hout: https://en.wikipedia.org/wiki/Tetrahedron#Volume
 
-tetra_v=cell(4,1);
 tetra_xyz=cell(4,1);
 
 for idv=1:4
-    tetra_v{idv}=tetra_node(idv,:);
-    tetra_xyz{idv}=node_xyz(:,tetra_v{idv});
+    tetra_xyz{idv}=node_xyz(:,tetra_node(idv,:));
 end;
 
 % volume of the tetrahedron
