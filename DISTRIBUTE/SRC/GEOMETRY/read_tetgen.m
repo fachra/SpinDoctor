@@ -140,11 +140,14 @@ aspect_ratio_lim = 0.05; % the worst -> [0, 1] <- the best
 Qmesh=cell(1,mymesh.Ncmpt);
 hmax=0;
 for icmpt = 1:mymesh.Ncmpt
+    Qmesh_Dang=mesh_quality(mymesh.Pts_cmpt_reorder{icmpt},mymesh.Ele_cmpt_reorder{icmpt}) ;
+    
     Qmesh{icmpt} = tet_mesh_quality(mymesh.Pts_cmpt_reorder{icmpt},mymesh.Ele_cmpt_reorder{icmpt},0);
     hmax = max(max(Qmesh{icmpt}.hout),hmax);
 %    if Qmesh{icmpt}.quality1(1)<aspect_ratio_lim
         disp(['  Compartment ',num2str(icmpt),' - FE mesh with minimum aspect ratio of ',num2str(Qmesh{icmpt}.quality1(1),'%.1e')]);
 %    end;
+    disp(['*********',num2str(norm(Qmesh{icmpt}.hin - Qmesh_Dang.hin'))]);
 end;
 %%%%%%%%%%%%%%%%%%% End of checking the mesh quality %%%%%%%%%%%%%%%%%%%%%%
 end
