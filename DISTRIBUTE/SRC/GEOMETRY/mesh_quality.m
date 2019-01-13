@@ -11,18 +11,22 @@ for idv=1:4
     tetra_xyz{idv}=node_xyz(:,tetra_node(idv,:));
 end;
 
-% volume of the tetrahedron
-vol = 1/6*abs(dot(tetra_xyz{1}-tetra_xyz{4},cross(tetra_xyz{2}-tetra_xyz{4},tetra_xyz{3}-tetra_xyz{4})));
-
+% All vectors formed by 4 vertices
 v21 = tetra_xyz{2} - tetra_xyz{1}; v31 = tetra_xyz{3} - tetra_xyz{1};
 v41 = tetra_xyz{4} - tetra_xyz{1}; v32 = tetra_xyz{3} - tetra_xyz{2};
 v42 = tetra_xyz{4} - tetra_xyz{2}; v43 = tetra_xyz{4} - tetra_xyz{3};
 
+
+% volume of the tetrahedron
+vol = 1/6*abs(dot(v41,cross(v42,v43)));
+
+% Length of all edges
 l21 = vecnorm(v21,2); l31 = vecnorm(v31,2);
 l41 = vecnorm(v41,2); l32 = vecnorm(v32,2);
 l42 = vecnorm(v42,2); l43 = vecnorm(v43,2);    
 
 % Compute InRadius based on the volume and areas of 4 faces
+% Each face area is computed by Heron's Formula
 p123 = 0.5*(l21 + l31 + l32); p234 = 0.5*(l32 + l42 + l43);
 p341 = 0.5*(l43 + l41 + l31); p124 = 0.5*(l21 + l41 + l42);
 
@@ -34,10 +38,10 @@ a124 = sqrt( abs(p124.*(p124-l21).*(p124-l41).*(p124-l42)) );
 hin = 3*vol./(a123 + a234 + a341 + a124); 
 
 % Compute Circumradius
-r1 = l21 .*l43  + l31  .*l42 + l41.*l32;
-r2 = -l21.*l43 + l31  .*l42 + l41.*l32;
-r3 = l21 .*l43 - l31  .*l42 + l41.*l32;
-r4 = l21 .*l43  + l31 .*l42 - l41.*l32;
+r1 =  l21 .* l43 + l31 .* l42 + l41 .* l32;
+r2 = -l21 .* l43 + l31 .* l42 + l41 .* l32;
+r3 =  l21 .* l43 - l31 .* l42 + l41 .* l32;
+r4 =  l21 .* l43 + l31 .* l42 - l41 .* l32;
 
 hout = sqrt(r1.*r2.*r3.*r4)./(24*vol);
 
