@@ -148,6 +148,8 @@ for icmpt = 1:mymesh.Ncmpt
         disp(['  Compartment ',num2str(icmpt),' - FE mesh with minimum aspect ratio of ',num2str(Qmesh{icmpt}.quality1(1),'%.1e')]);
 %    end;
     disp(['*********',num2str(norm(Qmesh{icmpt}.hin - Qmesh_Dang.hin'))]);
+    Qmesh_Dang.quality
+    Qmesh{icmpt}.quality1
 end;
 %%%%%%%%%%%%%%%%%%% End of checking the mesh quality %%%%%%%%%%%%%%%%%%%%%%
 end

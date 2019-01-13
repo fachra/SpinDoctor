@@ -32,10 +32,9 @@ pc = (   l234.* tetra_xyz{1} + l134.* tetra_xyz{2}   ...
       + l124.* tetra_xyz{3} + l123.* tetra_xyz{4} )./( l234 + l134 + l124 + l123 );
 
 b = tetra_xyz;
-b{1}(4,:)=1;
-b{2}(4,:)=1;
-b{3}(4,:)=1;
-b{4}(4,:)=1;
+for idv=1:4
+    b{idv}(4,:)=1;
+end;
 
 det = ...
   b{1}(1,:) .* ( ...
@@ -77,7 +76,7 @@ r4 = l21 .*l43  + l31 .*l42 - l41.*l32;
 % Circumradius
 hout = sqrt(r1.*r2.*r3.*r4)./(24*vol);
 
-tetrahedron_quality = 3.0 * hin / hout;
+tetrahedron_quality = 3.0 * hin ./ hout;
 value_max  = max  ( tetrahedron_quality );
 value_min  = min  ( tetrahedron_quality );
 value_mean = mean ( tetrahedron_quality );
